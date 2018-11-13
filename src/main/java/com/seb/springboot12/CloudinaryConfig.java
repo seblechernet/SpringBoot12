@@ -1,11 +1,11 @@
 package com.seb.springboot12;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.Singleton;
 import org.apache.tomcat.websocket.Transformation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import com.cloudinary.Cloudinary;
-import com.cloudinary.utils.ObjectUtils;
 import java.io.IOException;
 import java.util.Map;
 
@@ -23,7 +23,7 @@ public class CloudinaryConfig {
 
     public Map upload(Object file, Map options) {
         try {
-            return clcoudinary.upload().upload(file, options);
+            return cloudinary.uploader().upload(file, options);
         } catch (IOException e){
             e.printStackTrace();
             return null;
