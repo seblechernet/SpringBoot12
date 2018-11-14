@@ -1,5 +1,6 @@
 package com.seb.springboot12;
 
+import com.cloudinary.utils.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +21,7 @@ public class MainController {
     @RequestMapping("/")
     public String listActors(Model model){
         model.addAttribute("actors",actorRepository.findAll());
-        return "llist";
+        return "list";
 
     }
     @GetMapping("/add")
@@ -34,8 +35,9 @@ public class MainController {
         if(file.isEmpty()){
             return "redirect:/add";
         }
-        try{
-            Map uploadResult=cloudc.upload(file.getBytes(),actor.setHeadshot(uploadReult.get("url").toString());
+        try {
+            Map uploadResult = cloudc.upload(file.getBytes(), ObjectUtils.asMap("resourcetype", "auto"));
+            actor.setHeadshot(uploadResult.get("url").toString());
             actorRepository.save(actor);
         }catch (IOException e){
             e.printStackTrace();
